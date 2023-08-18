@@ -4,11 +4,17 @@ import { View, Image, Text, StyleSheet } from 'react-native';
 // assets
 import placeholder from '../assets/images/placeholder.png';
 
-const CategoryItem: React.FC = () => {
+interface CategoryItemProps {
+    categoryName: string; // Prop for category name
+  }
+
+  
+
+  const CategoryItem: React.FC<CategoryItemProps> = ({ categoryName }) => {
     return (
         <View style={[styles.categoriesGridItem]}>
                 <Image source={placeholder} style={styles.categoriesGridImage} />
-                <Text style={styles.categoriesGridItemText}>Section</Text>
+                <Text style={styles.categoriesGridItemText}>{categoryName}</Text>
         </View>
     );
     }
@@ -19,11 +25,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '40%',
         height: 130,
-        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
-        gap: 10,
       },
     
       categoriesGridImage: {
@@ -36,9 +40,8 @@ const styles = StyleSheet.create({
     
       categoriesGridItemText: {
         fontFamily: 'Cochin',
-        fontSize: 18,
+        fontSize: 30,
         color: 'white',
-        textAlign: 'center',
       },
 
 });

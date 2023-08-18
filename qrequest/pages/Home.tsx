@@ -20,18 +20,6 @@ const Home: React.FC = () => {
   const [activeSection, setActiveSection] = useState('section1'); // Initialize with the first section
   const scrollViewRef = useRef<ScrollView | null>(null);
 
-  const [IsScrolling, setIsScrolling] = useState('relative'); // Initial position
-  const handleScroll = (event: any) => {
-    console.log(event.nativeEvent.contentOffset.y);
-    const { contentOffset } = event.nativeEvent;
-    if (contentOffset.y < -50) {
-      setIsScrolling('relative'); 
-    }
-    if (contentOffset.y > 10) {
-      setIsScrolling('absolute'); 
-    }
-  };
-
   const scrollToSection = (section: string) => {
     setActiveSection(section);
     if (scrollViewRef.current) {
@@ -40,45 +28,59 @@ const Home: React.FC = () => {
     }
   };
 
+  const handleScroll = (event: any) => {
+    const { contentOffset } = event.nativeEvent;
+    const index = Math.floor(contentOffset.x / screen_width); // Calculate the index of the active section
+    const section = index === 0 ? 'section1' : index === 1 ? 'section2' : 'section3';
+    setActiveSection(section);
+  };
+  
+
   return (
       <SafeAreaView style={styles.container}>
         <ScrollView
           ref={scrollViewRef}
           horizontal={true}
           pagingEnabled={true}
+          onScroll={handleScroll}
           contentContainerStyle={{ width: screen_width * 3 }} // Total width of all sections
         >
           {/* First Section */}
-          <LinearGradient colors={['#464646', '#000']} style={styles.backgroundImage} locations={[0.3, 1]} start={{ x: 1, y: 0 }} end={{ x: 0.7, y: 0.7 }}>
+          <LinearGradient colors={['#464646', '#000']} style={styles.backgroundImage} locations={[0, 0.5]} >
            <View style={[styles.categoriesSection]}>
                 <View style={styles.introText}>
                   <Text style={styles.categoriesTitle}>Restaurant Name</Text>
                   <Text style={styles.categoriesText}>Slogan</Text>
                 </View>
-                <View style={{height: 200, width: '100%', position: IsScrolling}}>
-                  <Image source={steak} style={{height: '80%', width: '50%', resizeMode: 'contain', position: 'absolute', bottom: 0, right: 0}} />
+                <View style={{height: 300, width: '100%', position: 'absolute'}}>
+                  <Image source={steak} style={{height: '100%', width: '80%', resizeMode: 'contain', position: 'absolute', bottom: 0, right: 0}} />
                 </View>
               <ScrollView 
                 horizontal={false}
                 contentContainerStyle={{ width: screen_width}}
                 style={{ height: screen_height}}
-                onScroll={handleScroll}
+                //onScroll={handleScroll}
                 scrollEventThrottle={16}
+                showsVerticalScrollIndicator={false}
+                
+
               >
+                <View style={{height: 200, width: '100%'}}>
+                </View>
                 
                 <View style={[styles.categoriesGrid]}>
-                  <CategoryItem />
-                  <CategoryItem />
-                  <CategoryItem />
-                  <CategoryItem />
-                  <CategoryItem />
-                  <CategoryItem />
-                  <CategoryItem />
-                  <CategoryItem />
-                  <CategoryItem />
-                  <CategoryItem />
-                  <CategoryItem />
-                  <CategoryItem />
+                  <CategoryItem categoryName="starter" />
+                  <CategoryItem categoryName="main" />
+                  <CategoryItem categoryName="dessert" />
+                  <CategoryItem categoryName="drink" />
+                  <CategoryItem categoryName="popular" />
+                  <CategoryItem categoryName="unpopular" />
+                  <CategoryItem categoryName="vegan" />
+                  <CategoryItem categoryName="vegetarian" />
+                  <CategoryItem categoryName="gluten-free" />
+                  <CategoryItem categoryName="dairy-free" />
+                  <CategoryItem categoryName="nut-free" />
+                  <CategoryItem categoryName='seafood-free' />
 
                 </View>
               </ScrollView>
@@ -105,6 +107,8 @@ const Home: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+
+
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover',
@@ -132,6 +136,8 @@ const styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
     zIndex: 0,
+    paddingVertical: 10,
+    
   },
 
 
@@ -140,6 +146,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     color: 'white',
+    shadowColor: 'black',
+    shadowOpacity: 1,
+    shadowOffset: { width: 0, height: 5 },
   },
 
   categoriesText: {
@@ -157,8 +166,9 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 20,
     gap: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
     borderRadius: 20,
+    paddingVertical: 20,
   },
 
   section: {
