@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import './App.css';
+
+const sectionsData = [
+  { id: 1, title: 'Home', content: 'Welcome to our restaurant!' },
+  { id: 2, title: 'Starters', content: 'Check out our delicious starters.' },
+  { id: 3, title: 'Main Courses', content: 'Check out our delicious main courses.' },
+  { id: 4, title: 'Desserts', content: 'Check out our delicious desserts.' },
+  { id: 5, title: 'Drinks', content: 'Check out our delicious drinks.' },
+  // ... Add more sections as needed
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeSection, setActiveSection] = useState(1);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+
+      sectionsData.forEach((section, index) => {
+        const sectionElement = document.getElementById(`section-${section.id}`);
+        if (sectionElement) {
+          const sectionTop = sectionElement.offsetTop - 50; // Adjust for navbar height
+          const sectionBottom = sectionTop + sectionElement.clientHeight;
+
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            setActiveSection(section.id);
+          }
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      <nav className="navbar">
+        {sectionsData.map(section => (
+          <a
+            key={section.id}
+            href={`#section-${section.id}`}
+            className={`nav-link ${activeSection === section.id ? 'active' : ''}`}
+          >
+            {section.title}
+            <div className={`indicator ${activeSection === section.id ? 'active' : ''}`} />
+          </a>
+        ))}
+      </nav>
+      <div className="scroll-container">
+        {sectionsData.map(section => (
+          <div
+            key={section.id}
+            id={`section-${section.id}`}
+            className={`section ${activeSection === section.id ? 'selected' : ''}`}
+          >
+            <h2>{section.title}</h2>
+            <p>{section.content}</p>
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
