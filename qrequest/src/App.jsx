@@ -44,7 +44,6 @@ function App() {
             className={`nav-link ${activeSection === section.id ? 'active' : ''}`}
           >
             {section.title}
-            <div className={`indicator ${activeSection === section.id ? 'active' : ''}`} />
           </a>
         ))}
       </nav>
