@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import './Landing.css';
 import testicon from './assets/react.svg'
+import Section from './Section.jsx'
 
 
 const sectionsData = [
@@ -64,28 +65,7 @@ export class Landing extends Component {
         </nav>
         <div className="scroll-container">
           {sectionsData.map(section => (
-            <div
-              key={section.id}
-              id={`section-${section.id}`}
-              className={`section ${this.state.activeSection === section.id ? 'selected' : ''}`}
-            >
-              <h2>{section.title}</h2>
-              <p>{section.content}</p>
-
-              <div className="section-columns">
-                <div className="left">
-                  <img src={testicon} alt="testicon" />
-                </div>
-                <div className="right"> 
-                  {section.items.map(item => (
-                    <div className="item">
-                      <h3>{item.name}</h3>
-                      <p>{item.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <Section key={section.id} section={section} activeSection={this.state.activeSection} />
           ))}
         </div>
       </div>
