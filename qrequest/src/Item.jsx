@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Item({ item, onQuantityChange }) {
+export default function Item({ item, onQuantityChange, onAddToCart }) {
     const [quantity, setQuantity] = useState(item.quantity);
 
     const handleIncrease = () => {
@@ -17,6 +17,12 @@ export default function Item({ item, onQuantityChange }) {
         }
     };
 
+    const handleAddToCart = () => {
+        onAddToCart(item.id, quantity);
+        setQuantity(0);
+        onQuantityChange(0);
+    };
+
     return (
         <div className="item">
             <div className="item-info">
@@ -30,6 +36,7 @@ export default function Item({ item, onQuantityChange }) {
                     <span>{quantity}</span>
                     <button onClick={handleIncrease}>+</button>
                 </div>
+                <button className="add-to-cart-button" onClick={handleAddToCart}>Add to Cart</button>
             </div>
         </div>
     );

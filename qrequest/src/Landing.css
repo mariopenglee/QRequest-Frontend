@@ -26,7 +26,7 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  background-color: #333;
+  background-color: #ED583F;
   padding: 10px 20px;
   gap: 20px;
   z-index: 100; /* Ensure navbar is above other content */
@@ -41,7 +41,9 @@
 }
 
 .nav-link:hover {
-  background-color: #2774AE;
+  border-style: solid;
+  border-width: 1px;
+  border-color: white;
   color: #ffffff;
   padding: 5px 10px;
   border-radius: 5px;
@@ -60,7 +62,9 @@
 }
 
 .nav-link.active {
-  background-color: #2774AE;
+  border-style: solid;
+  border-width: 1px;
+  border-color: white;
   color: #ffffff;
   padding: 5px 10px;
   border-radius: 5px;

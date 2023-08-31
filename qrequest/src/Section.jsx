@@ -36,6 +36,7 @@ export default function Section(props) {
                             key={item.id}
                             item={item}
                             onQuantityChange={(newQuantity) => handleItemQuantityChange(item.id, newQuantity)}
+                            onAddToCart={props.onAddToCart}
                         />
                     ))}
                 </div>

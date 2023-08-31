@@ -39,7 +39,7 @@ export class Landing extends Component {
       { id: 4, title: 'Drinks', content: '', items: [{name: "item1", description: "item1's description", price:"1", discount: false, discounted_price: 2, likes: 10, max_amount: -1, image: "image_url"}]}
     ]*/
     const sectionsBase = [
-      { id: 1, title: 'Home', content: 'Welcome to our restaurant!', items: [{name: "item1", description: "item1's description", quantity: 0}, {name: "item2", description: "item2's description", quantity: 0}, {name: "item3", description: "item3's description", quantity: 0}]},
+      { id: 1, title: 'Home', content: 'Welcome to our restaurant!', items: [{name: "burgir", description: "the best burgir in the world please buy at least 3", quantity: 0, price: 30.9, id: 101}, {name: "item2", description: "item2's description", quantity: 0, price: 12.10, id: 1}, {name: "item3", description: "item3's description", quantity: 0, id: 2, price: 1.99}]},
       { id: 2, title: 'Starters', content: 'Check out our delicious starters.', items: [{name: "item1", description: "item1's description"}, {name: "item2", description: "item2's description"}, {name: "item3", description: "item3's description"}]},
       { id: 3, title: 'Main Courses', content: 'Check out our delicious main courses.', items: [{name: "item1", description: "item1's description"}, {name: "item2", description: "item2's description"}, {name: "item3", description: "item3's description"}]},
       { id: 4, title: 'Desserts', content: 'Check out our delicious desserts.', items: [{name: "item1", description: "item1's description"}, {name: "item2", description: "item2's description"}, {name: "item3", description: "item3's description"}]},
@@ -79,6 +79,12 @@ export class Landing extends Component {
     });
   }
 
+  // handle cart related functions
+  handleAddToCart = (itemId, quantity) => {
+    console.log(`Add ${quantity} of item ${itemId} to cart`);
+  }
+
+
   
 
   render() {
@@ -108,7 +114,7 @@ export class Landing extends Component {
             </div>
           </div>
           {this.state.sectionsData.map(section => (
-            <Section key={section.id} section={section} activeSection={this.state.activeSection} />
+            <Section key={section.id} section={section} activeSection={this.state.activeSection} onAddToCart={this.handleAddToCart} />
           ))}
         </div>
       </div>
