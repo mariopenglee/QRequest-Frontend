@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Item.css';
 
 export default function Item({ item, onQuantityChange, onAddToCart }) {
     const [quantity, setQuantity] = useState(item.quantity);
@@ -30,14 +31,19 @@ export default function Item({ item, onQuantityChange, onAddToCart }) {
                 <p>{item.description}</p>
             </div>
             <div className="item-price">
-                <p>${item.price}</p>
-                <div className="quantity-controls">
-                    <button onClick={handleDecrease}>-</button>
-                    <span>{quantity}</span>
-                    <button onClick={handleIncrease}>+</button>
-                </div>
-                <button className="add-to-cart-button" onClick={handleAddToCart}>Add to Cart</button>
+                <span>$ {item.price}</span>
             </div>
+                <div className="quantity-controls">
+                    <button onClick={handleDecrease}>&lt;</button>
+                    <div className="quantity-container">
+                        {quantity > 0 ? <span className="quantity">{quantity}</span> : null}
+                    </div>
+                    <button onClick={handleIncrease}>&gt;</button>
+                </div>
+                <button className="add-to-cart-button" onClick={handleAddToCart}>
+                    <span>🛒</span>
+                </button>
+                
         </div>
     );
 }
