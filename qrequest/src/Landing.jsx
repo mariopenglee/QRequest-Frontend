@@ -13,7 +13,7 @@ export class Landing extends Component {
       activeSection : 1,
       restaurantName : "Test Name",
       restaurantImage : "",
-      restaurantSlogan : "",
+      restaurantSlogan : "slogan",
       restaurantRating : 1,
       restaurantFeatured: {},
       restaurantTags: {},
@@ -154,20 +154,18 @@ export class Landing extends Component {
 
   render() {
     return (
-      
       <div className="app">
-        <div className="sticky-margin"></div>
         <div className= "top-sticky">
         <div className="restaurant-info">
             <div className="restaurant-image">
               <img src={this.state.restaurantImage} alt="testicon" />
             </div>
             <div className="restaurant-title">
-              <h1>{this.state.restaurantName}</h1> 
+              <p className="restaurant-name">{this.state.restaurantName}</p>
+              <p className="restaurant-slogan">{this.state.restaurantSlogan}</p>
             </div>
-            <p>{this.state.restaurantRating}</p>
-            <p>{this.state.restaurantSlogan}</p>
-          </div>
+            <span>{this.state.restaurantRating}</span>
+        </div>
         <nav className="navbar">    
           {this.state.sectionsData.map(section => (
             <a

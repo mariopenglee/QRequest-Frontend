@@ -7,13 +7,13 @@
 
   font-family: Work Sans, sans-serif;
   line-height: 1.5;
+  font-size: small;
   font-weight: 400;
 
   color-scheme: light dark;
   color: black;
 
 
-  margin: 10px;
   background-color: var(--main-color);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -38,11 +38,12 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  margin: 0px;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  place-items: top;
+  background-color: var(--main-color);
+  overflow: hidden;
+
 }
 
 h1 {
@@ -80,8 +81,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
-
-.app {
-  background-color: var(--ceramic);
 }

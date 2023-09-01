@@ -23,11 +23,12 @@ export default function Section(props) {
             id={`section-${section.id}`}
             className={`section ${props.activeSection === section.id ? 'selected' : ''}`}
         >
-            <h2>{section.title}</h2>
-            <p>{section.content}</p>
+
 
             <div className="section-columns">
                 <div className="cat-icon">
+                    <p className='section-title'>{section.title}</p>
+                    <p>{section.content}</p>
                     <img src={testicon} alt="testicon" />
                 </div>
                 <div className="cat-items">

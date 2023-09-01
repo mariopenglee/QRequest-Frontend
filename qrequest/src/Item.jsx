@@ -27,8 +27,8 @@ export default function Item({ item, onQuantityChange, onAddToCart }) {
     return (
         <div className="item">
             <div className="item-info">
-                <h3>{item.name}</h3>
-                <p>{item.description}</p>
+                <p className= "item-name">{item.name}</p>
+                <p className="item-description">{item.description}</p>
             </div>
             <div className="item-price">
                 <span>$ {item.price}</span>
