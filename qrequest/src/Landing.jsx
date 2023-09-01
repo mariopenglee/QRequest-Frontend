@@ -16,8 +16,10 @@ export class Landing extends Component {
       restaurantSlogan : "",
       restaurantRating : 1,
       restaurantFeatured: {},
-      sectionsData : [],
-      
+      restaurantTags: {},
+      restaurantTagsString: "",
+      sectionsData: [],
+      restaurantProductsByTag: {},
     };
     this.handleScroll = this.handleScroll.bind(this);
   }
@@ -49,14 +51,77 @@ export class Landing extends Component {
     fetch('http://127.0.0.1:8000/api/restaurants/' + restaurantUUID + '/' )
     .then(response => response.json())
     .then(responseData => {
-      this.setState({ restaurantName: responseData.name, 
-                      restaurantSlogan: responseData.slogan,
-                      restaurantRating: responseData.rating.toString(),
-                      restaurantImage: responseData.image
-                    });
+        this.setState({ 
+            restaurantName: responseData.name, 
+            restaurantSlogan: responseData.slogan,
+            restaurantRating: responseData.rating.toString(),
+            restaurantImage: responseData.image
+        }, () => {});
     });
 
-    
+    fetch('http://127.0.0.1:8000/api/featured-products/' + restaurantUUID + '/' )
+    .then(response => response.json())
+    .then(responseData => {
+        let restaurantFeatured = responseData.map(function(item) {
+            return {
+                name: item.name,
+                description: item.description,
+                price: item.price,
+                discount: item.discount,
+                discounted_price: item.discounted_price,
+                likes: item.likes,
+                max_amount: item.max_amount
+            };
+        });
+        this.setState({ restaurantFeatured: restaurantFeatured }, () => {});
+    });
+
+    fetch('http://127.0.0.1:8000/api/restaurant-tags/' + restaurantUUID + '/' )
+    .then(response => response.json())
+    .then(responseData => {
+        let restaurantTags = responseData.map(function(item) {
+            return {
+              id: item.id,
+              name: item.name,
+            }
+        });
+        let tag_id_array = []
+        for (let i = 0; i < restaurantTags.length; i++) {
+            tag_id_array.push(restaurantTags[i].id);
+        }
+        let restaurantTagsString = tag_id_array.join('-');
+        this.setState({ restaurantTags: restaurantTags, restaurantTagsString: restaurantTagsString }, () => {
+            fetch('http://127.0.0.1:8000/api/products/' + restaurantUUID + '/' + this.state.restaurantTagsString + '/' )
+                .then(response => response.json())
+                .then(responseProducts => {
+                    this.setState({ restaurantProductsByTag: responseProducts }, () => {
+                      let sections = []
+
+                      for (const key in this.state.restaurantProductsByTag) {
+                          let section = {}
+                          section.id = key
+                          section.title = key
+                          section.content = ""
+                          section.items = this.state.restaurantProductsByTag[key].map(function(item) {
+                              return {
+                                  name: item.name,
+                                  description: item.description,
+                                  price: item.price,
+                                  discount: item.discount,
+                                  discounted_price: item.discounted_price,
+                                  likes: item.likes,
+                                  max_amount: item.max_amount
+                              };
+                          });
+                          sections.push(section);
+                      }
+                      
+                      this.setState({ sectionsData: sections }, () => {console.log(this.state.sectionsData)}); 
+                    });
+                });
+        });
+    });
+
   }
 
   componentWillUnmount() {
