@@ -31,9 +31,9 @@ export class Landing extends Component {
   }
 
   load() {
+    const baseRequestURL = 'http://159.223.192.169'
     const params = new URLSearchParams(window.location.search);
     const restaurantUUID = params.get('restaurant');
-    const restaurant_base = { title: 'Name', content: 'Welcome to our restaurant!', image: 'image_url', rating: 2, items: [{name: "item1", description: "item1's description", price:"1", discount: false, discounted_price: 2, likes: 10, max_amount: -1}]}
     /*const sectionsBase = [
       { id: 1, title: 'Starters', content: '', items: [{name: "item1", description: "item1's description", price:"1", discount: false, discounted_price: 2, likes: 10, max_amount: -1, image: "image_url"}]},
       { id: 2, title: 'Main Courses', content: '', items: [{name: "item1", description: "item1's description", price:"1", discount: false, discounted_price: 2, likes: 10, max_amount: -1, image: "image_url"}]},
@@ -48,7 +48,7 @@ export class Landing extends Component {
       { id: 5, title: 'Drinks', content: 'Check out our delicious drinks.', items: [{name: "item1", description: "item1's description"}, {name: "item2", description: "item2's description"}, {name: "item3", description: "item3's description"}]},
     ]
     this.setState({sectionsData: sectionsBase})
-    fetch('http://127.0.0.1:8000/api/restaurants/' + restaurantUUID + '/' )
+    fetch(baseRequestURL + '/api/restaurants/' + restaurantUUID + '/' )
     .then(response => response.json())
     .then(responseData => {
         this.setState({ 
@@ -59,7 +59,7 @@ export class Landing extends Component {
         }, () => {});
     });
 
-    fetch('http://127.0.0.1:8000/api/featured-products/' + restaurantUUID + '/' )
+    fetch(baseRequestURL + '/api/featured-products/' + restaurantUUID + '/' )
     .then(response => response.json())
     .then(responseData => {
         let restaurantFeatured = responseData.map(function(item) {
@@ -76,7 +76,7 @@ export class Landing extends Component {
         this.setState({ restaurantFeatured: restaurantFeatured }, () => {});
     });
 
-    fetch('http://127.0.0.1:8000/api/restaurant-tags/' + restaurantUUID + '/' )
+    fetch(baseRequestURL + '/api/restaurant-tags/' + restaurantUUID + '/' )
     .then(response => response.json())
     .then(responseData => {
         let restaurantTags = responseData.map(function(item) {
@@ -91,7 +91,7 @@ export class Landing extends Component {
         }
         let restaurantTagsString = tag_id_array.join('-');
         this.setState({ restaurantTags: restaurantTags, restaurantTagsString: restaurantTagsString }, () => {
-            fetch('http://127.0.0.1:8000/api/products/' + restaurantUUID + '/' + this.state.restaurantTagsString + '/' )
+            fetch(baseRequestURL + '/api/products/' + restaurantUUID + '/' + this.state.restaurantTagsString + '/' )
                 .then(response => response.json())
                 .then(responseProducts => {
                     this.setState({ restaurantProductsByTag: responseProducts }, () => {
