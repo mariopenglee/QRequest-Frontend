@@ -114,7 +114,10 @@ export class Landing extends Component {
                                   discount: item.discount,
                                   discounted_price: item.discounted_price,
                                   likes: item.likes,
-                                  max_amount: item.max_amount
+                                  max_amount: item.max_amount,
+                                  quantity: 0,
+                                  id: item.id
+
                               };
                           });
                           sections.push(section);
@@ -172,6 +175,7 @@ export class Landing extends Component {
               <img src={this.state.restaurantImage} alt="testicon" />
             </div>
             <div className="restaurant-title">
+              <p> xd </p>
               <p className="restaurant-name">{this.state.restaurantName}</p>
               <p className="restaurant-slogan">{this.state.restaurantSlogan}</p>
             </div>
