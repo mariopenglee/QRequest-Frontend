@@ -13,8 +13,6 @@ export default function Section(props) {
             }
             return item;
         });
-
-        // Update the state or handle the updatedItems array using your state management mechanism
     };
 
     return (

@@ -26,9 +26,11 @@ export class Landing extends Component {
 
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-    this.load()
+    const scrollContainer = document.querySelector('.scroll-container');
+    scrollContainer.addEventListener('scroll', this.handleScroll);
+    this.load();
   }
+  
 
   load() {
     const baseRequestURL = 'http://159.223.192.169'
@@ -64,13 +66,15 @@ export class Landing extends Component {
     .then(responseData => {
         let restaurantFeatured = responseData.map(function(item) {
             return {
+                id: item.id,
                 name: item.name,
                 description: item.description,
                 price: item.price,
                 discount: item.discount,
                 discounted_price: item.discounted_price,
                 likes: item.likes,
-                max_amount: item.max_amount
+                max_amount: item.max_amount,
+                quantity: 0
             };
         });
         this.setState({ restaurantFeatured: restaurantFeatured }, () => {});
@@ -125,29 +129,36 @@ export class Landing extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    const scrollContainer = document.querySelector('.scroll-container');
+    scrollContainer.removeEventListener('scroll', this.handleScroll);
   }
 
   handleScroll() {
-    const scrollPosition = window.scrollY;
-
-    this.state.sectionsData.forEach((section, index) => {
-      const sectionElement = document.getElementById(`section-${section.id}`);
-      if (sectionElement) {
-        const sectionTop = sectionElement.offsetTop - 50; // Adjust for navbar height
-        const sectionBottom = sectionTop + sectionElement.clientHeight;
-
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-          this.setState({ activeSection : section.id });
-        }
+    const scrollContainer = document.querySelector('.scroll-container');
+    const scrollPosition = scrollContainer.scrollTop;
+    const navbar = document.querySelector('.navbar');
+    const navbarheight = navbar.offsetHeight;
+    const restoInfo = document.querySelector('.restaurant-info');
+    const restoInfoHeight = restoInfo.offsetHeight;
+    const fullOffset = navbarheight + restoInfoHeight;
+  
+    let activeSection = 1;
+    this.state.sectionsData.forEach(section => {
+      const sectionElement = document.querySelector(`#section-${section.id}`);
+      if (sectionElement.offsetTop <= scrollPosition + fullOffset) {
+        activeSection = section.id;
       }
     });
+    this.setState({ activeSection: activeSection });
   }
+  
 
   // handle cart related functions
   handleAddToCart = (itemId, quantity) => {
     console.log(`Add ${quantity} of item ${itemId} to cart`);
   }
+
+
 
 
   
