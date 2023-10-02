@@ -1,9 +1,13 @@
 .cat-icon {
-    width: 6em;
-    flex-direction: column;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 1em;
+    padding: 0.5em;
   }
+
   
 .section-title {
   font-size: 1.25em;
@@ -12,31 +16,29 @@
 
 }
 .cat-items {
-  border-left: 0.12em solid var(--main-color);
-  flex: 1;
+  /* border-left: 0.12em solid var(--main-color); */
+  width: calc(100% - 3em);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 2em;
+  gap: 5em;
   padding: 1.5em;
 }
 
 .section {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   text-align: center;
-  border-bottom: 0.12em solid var(--main-color);
-  
+  border-bottom: 0.12em solid var(--main-color);  
 }
 
 .section-columns {
-  width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  width: 100%;
 }

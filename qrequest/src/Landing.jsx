@@ -4,15 +4,14 @@ import testicon from './assets/react.svg'
 import Section from './Section.jsx'
 
 
-
-
 export class Landing extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       activeSection : 1,
       restaurantName : "Test Name",
-      restaurantImage : "",
+      restaurantImage : "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png",
       restaurantSlogan : "slogan",
       restaurantRating : 1,
       restaurantFeatured: {},
@@ -43,7 +42,7 @@ export class Landing extends Component {
       { id: 4, title: 'Drinks', content: '', items: [{name: "item1", description: "item1's description", price:"1", discount: false, discounted_price: 2, likes: 10, max_amount: -1, image: "image_url"}]}
     ]*/
     const sectionsBase = [
-      { id: 1, title: 'Home', content: 'Welcome to our restaurant!', items: [{name: "the grand testing burgir", description: "the best burgir in the world please buy at least 3. Lore ipsum XDDDD please buy burgirs i need one more line of text to test the alignment of divs cfdddd", quantity: 0, price: 30.9, id: 101}, {name: "item2", description: "item2's description", quantity: 0, price: 12.10, id: 1}, {name: "item3", description: "item3's description", quantity: 0, id: 2, price: 1.99}]},
+      { id: 1, title: 'Home', content: 'Welcome to our restaurant!', items: [{name: "the grand testing burgir of the gods", description: "the best burgir in the world please buy at least 3. Lore ipsum XDDDD please buy burgirs i need one more line of text to test the alignment of divs cfdddd", quantity: 0, price: 30.9, id: 101}, {name: "item2", description: "item2's description", quantity: 0, price: 12.10, id: 1}, {name: "item3", description: "item3's description", quantity: 0, id: 2, price: 1.99}]},
       { id: 2, title: 'Starters', content: 'Check out our delicious starters.', items: [{name: "item1", description: "item1's description"}, {name: "item2", description: "item2's description"}, {name: "item3", description: "item3's description"}]},
       { id: 3, title: 'Main Courses', content: 'Check out our delicious main courses.', items: [{name: "item1", description: "item1's description"}, {name: "item2", description: "item2's description"}, {name: "item3", description: "item3's description"}]},
       { id: 4, title: 'Desserts', content: 'Check out our delicious desserts.', items: [{name: "item1", description: "item1's description"}, {name: "item2", description: "item2's description"}, {name: "item3", description: "item3's description"}]},
@@ -136,6 +135,20 @@ export class Landing extends Component {
     scrollContainer.removeEventListener('scroll', this.handleScroll);
   }
 
+  scrollToSection(sectionId) {
+    const sectionElement = document.querySelector(`#section-${sectionId}`);
+    const scrollContainer = document.querySelector('.scroll-container');
+    const navbar = document.querySelector('.navbar');
+    const navbarheight = navbar.offsetHeight;
+    const restoInfo = document.querySelector('.restaurant-info');
+    const restoInfoHeight = restoInfo.offsetHeight;
+    const fullOffset = navbarheight + restoInfoHeight;
+    scrollContainer.scrollTo({
+      top: sectionElement.offsetTop - fullOffset, 
+      behavior: 'smooth',
+    });
+  }
+
   handleScroll() {
     const scrollContainer = document.querySelector('.scroll-container');
     const scrollPosition = scrollContainer.scrollTop;
@@ -167,37 +180,54 @@ export class Landing extends Component {
   
 
   render() {
+    // Calculate the number of filled and empty stars based on restaurantRating
+    const maxStars = 5; // Maximum number of stars
+    const filledStars = Math.round(this.state.restaurantRating); // Rounded rating value
+    const emptyStars = maxStars - filledStars;
+
+    // Create arrays for filled and empty stars
+    const filledStarArray = Array.from({ length: filledStars }, (_, index) => (
+      <span key={index} className="star-filled">⭐️</span>
+    ));
+    const emptyStarArray = Array.from({ length: emptyStars }, (_, index) => (
+      <span key={index} className="star-empty">⭐️</span>
+    ));
+
     return (
       <div className="app">
         <div className= "top-sticky">
         <div className="restaurant-info">
-            <div className="restaurant-image">
-              <img src={this.state.restaurantImage} alt="testicon" />
-            </div>
+            <img src={this.state.restaurantImage} alt="testicon" className='restaurant-image' />
             <div className="restaurant-title">
-              <p> xd </p>
               <p className="restaurant-name">{this.state.restaurantName}</p>
               <p className="restaurant-slogan">{this.state.restaurantSlogan}</p>
             </div>
-            <span>{this.state.restaurantRating}</span>
+            <div className="restaurant-rating">
+              {filledStarArray}
+              {emptyStarArray}
+            </div>
         </div>
-        <nav className="navbar">    
-          {this.state.sectionsData.map(section => (
-            <a
-              key={section.id}
-              href={`#section-${section.id}`}
-              className={`nav-link ${this.state.activeSection === section.id ? 'active' : ''}`}
-            >
-              {section.title}
-            </a>
-          ))}
-        </nav>
+        <nav className="navbar">
+        {this.state.sectionsData.map(section => (
+          <a
+            key={section.id}
+            onClick={() => this.scrollToSection(section.id)}
+            className={`nav-link ${this.state.activeSection === section.id ? 'active' : ''}`}
+          >
+            {section.title}
+          </a>
+        ))}
+      </nav>
         </div>
         <div className='scroll-container'>
           {this.state.sectionsData.map(section => (
             <Section key={section.id} section={section} activeSection={this.state.activeSection} onAddToCart={this.handleAddToCart} />
           ))}
         </div>
+
+        <button className='cart-button'>
+          <span>🥡</span>
+        </button>
       </div>
     );
   }
