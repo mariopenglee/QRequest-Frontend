@@ -202,10 +202,14 @@ export class Landing extends Component {
               <p className="restaurant-name">{this.state.restaurantName}</p>
               <p className="restaurant-slogan">{this.state.restaurantSlogan}</p>
             </div>
+            {/*
             <div className="restaurant-rating">
               {filledStarArray}
               {emptyStarArray}
             </div>
+            */}
+            
+            
         </div>
         <nav className="navbar">
         {this.state.sectionsData.map(section => (

@@ -64,7 +64,7 @@ min-width: fit-content;
 }
 
 .quantity-controls button {
-    color: red;
+    color: var(--main-color);
     background-color: transparent;
     font-size: 1.2em;
     font-weight: bold;
@@ -72,10 +72,10 @@ min-width: fit-content;
 }
 
 .add-to-cart-button {
-    border-radius: 0px;
+    border-radius: 1em;
     padding: 0px;
-    height: 3em;
-    width: 4em;
+    height: 4em;
+    width: 5em;
 }
 
 .quantity {
