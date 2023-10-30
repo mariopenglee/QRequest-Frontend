@@ -218,7 +218,10 @@ export class Landing extends Component {
             onClick={() => this.scrollToSection(section.id)}
             className={`nav-link ${this.state.activeSection === section.id ? 'active' : ''}`}
           >
+            <div className="nav-section-wrapper">
+            {section.icon ? <img src={section.icon} alt="testicon" /> : <img src={testicon} alt="defaulticon" className='navbar-icon'/>}
             {section.title}
+            </div>
           </a>
         ))}
       </nav>

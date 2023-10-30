@@ -6,15 +6,13 @@
     justify-content: flex-start;
     gap: 1em;
     padding: 0.5em;
-    background-color: var(--main-color);
-    color: var(--ceramic);
     width: calc(100% - 1em);
   }
 
   
 .section-title {
   font-size: 1.25em;
-  color: var(--ceramic);
+  color: var(--font-highlight);
   font-weight: bold;
 
 }
@@ -27,6 +25,7 @@
   justify-content: flex-start;
   gap: 5em;
   padding: 1.5em;
+  
 }
 
 .section {
@@ -35,7 +34,6 @@
   align-items: flex-start;
   justify-content: flex-start;
   text-align: center;
-  border-bottom: 0.12em solid var(--main-color);  
 }
 
 .section-columns {
