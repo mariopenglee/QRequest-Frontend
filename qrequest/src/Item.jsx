@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import './Item.css';
 
 export default function Item({ item, onQuantityChange, onAddToCart }) {

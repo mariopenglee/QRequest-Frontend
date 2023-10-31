@@ -25,7 +25,7 @@ export default function Section(props) {
 
             <div className="section-columns">
                 <div className="cat-icon">
-                    <img src={testicon} alt="testicon" />
+                    {/* <img src={testicon} alt="testicon" />*/}
                     <p className='section-title'>{section.title}</p>
                     <p>{section.content}</p>
                 </div>

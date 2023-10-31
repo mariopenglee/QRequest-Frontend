@@ -16,6 +16,7 @@
 .item-name {
 font-size: 1.5em;
 font-weight: bold;
+color: var(--font-highlight);
 margin: 0;
 }
 .item-name-n-price {
@@ -70,24 +71,27 @@ min-width: fit-content;
 
 .quantity-controls button {
     color: var(--font-highlight);
+    width: 4em;
+    height: 4em;
     background-color: transparent;
     font-size: 1em;
     font-weight: bold;
     padding: 10px;
-    border-radius: 0.5em;
+    border-radius: 2em;
     background: --var(--background-main);
     box-shadow:  5px 5px 10px #bebebe,
                  -5px -5px 10px #ffffff;
 }
 
 .add-to-cart-button {
-    border-radius: 0.5em;
-background: #e0e0e0;
-box-shadow:  5px 5px 10px #bebebe,
-             -5px -5px 10px #ffffff;
+    width: 4em;
+    height: 4em;
+    border-radius: 2em;
+    background: #e0e0e0;
+    box-shadow:  5px 5px 10px #bebebe,
+                 -5px -5px 10px #ffffff;
 }
 
 .quantity {
     font-size: 1.5em;
-    
 }

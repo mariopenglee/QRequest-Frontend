@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import './Landing.css';
 import testicon from './assets/react.svg'
 import Section from './Section.jsx'
@@ -180,18 +180,7 @@ export class Landing extends Component {
   
 
   render() {
-    // Calculate the number of filled and empty stars based on restaurantRating
-    const maxStars = 5; // Maximum number of stars
-    const filledStars = Math.round(this.state.restaurantRating); // Rounded rating value
-    const emptyStars = maxStars - filledStars;
-
-    // Create arrays for filled and empty stars
-    const filledStarArray = Array.from({ length: filledStars }, (_, index) => (
-      <span key={index} className="star-filled">⭐️</span>
-    ));
-    const emptyStarArray = Array.from({ length: emptyStars }, (_, index) => (
-      <span key={index} className="star-empty">⭐️</span>
-    ));
+    
 
     return (
       <div className="app">
@@ -219,7 +208,7 @@ export class Landing extends Component {
             className={`nav-link ${this.state.activeSection === section.id ? 'active' : ''}`}
           >
             <div className="nav-section-wrapper">
-            {section.icon ? <img src={section.icon} alt="testicon" /> : <img src={testicon} alt="defaulticon" className='navbar-icon'/>}
+            {section.icon ? <img src={section.icon} alt="testicon" /> : <div className='navbar-icon'> <img src={testicon} alt="defaulticon" className='img'/> </div>}
             {section.title}
             </div>
           </a>
@@ -231,10 +220,13 @@ export class Landing extends Component {
             <Section key={section.id} section={section} activeSection={this.state.activeSection} onAddToCart={this.handleAddToCart} />
           ))}
         </div>
-
-        <button className='cart-button'>
-          <span>🥡</span>
-        </button>
+        <div className="bottom-sticky">
+          <div className="cart-container">
+            <button className='cart-button'>
+              <span>🥡</span>
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
