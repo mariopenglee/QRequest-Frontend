@@ -4,8 +4,9 @@ import testicon from './assets/react.svg'
 import Section from './Section.jsx'
 
 
+
 export class Landing extends Component {
-  
+ 
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +29,13 @@ export class Landing extends Component {
     const scrollContainer = document.querySelector('.scroll-container');
     scrollContainer.addEventListener('scroll', this.handleScroll);
     this.load();
+
+    const appHeight = () => {
+      const doc = document.documentElement
+      doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+    }
+    window.addEventListener('resize', appHeight)
+    appHeight()
   }
   
 
@@ -174,13 +182,11 @@ export class Landing extends Component {
     console.log(`Add ${quantity} of item ${itemId} to cart`);
   }
 
-
-
-
+  
   
 
   render() {
-    
+
 
     return (
       <div className="app">

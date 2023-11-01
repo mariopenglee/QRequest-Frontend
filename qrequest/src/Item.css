@@ -9,8 +9,8 @@
     padding: 1em;
     border-radius: 1em;
     background: #e0e0e0;
-    box-shadow:  20px 20px 60px #bebebe,
-             -20px -20px 60px #ffffff;
+    box-shadow:  5px 5px 10px #bebebe,
+             -5px -5px 10px #ffffff;
   }
 
 .item-name {
@@ -39,7 +39,21 @@ font-size: 1.5em;
 font-weight: bold;
 margin: 0;
 min-width: fit-content;
+display: flex;
+flex-direction: column;
+align-items: flex-end;
 }
+.visible {
+    display: block; /* Show when isExpanded is true */
+  }
+  
+.hidden {
+display: none; /* Hide when isExpanded is false */
+}
+  
+
+
+
 
 .prices-container {
     display: flex;
@@ -49,47 +63,19 @@ min-width: fit-content;
     gap: 1.5em;
 }
 
-.quantity-controls {
+
+.add-to-cart-button {
     display: flex;
+    width: 100%;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-}
-
-.quantity-container {
-    border-radius: 0px;
-    height: 2.8em;
-    width: 3.8em;
-    padding: 0px;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-
-.quantity-controls button {
-    color: var(--font-highlight);
-    width: 4em;
-    height: 4em;
-    background-color: transparent;
-    font-size: 1em;
+    border-radius: 2em;
+    background-color: var(--main-color);
+    color: var(--font-color);
     font-weight: bold;
-    padding: 10px;
-    border-radius: 2em;
-    background: --var(--background-main);
-    box-shadow:  5px 5px 10px #bebebe,
-                 -5px -5px 10px #ffffff;
-}
-
-.add-to-cart-button {
-    width: 4em;
-    height: 4em;
-    border-radius: 2em;
-    background: #e0e0e0;
-    box-shadow:  5px 5px 10px #bebebe,
-                 -5px -5px 10px #ffffff;
+    font-size: 1.2em;
+    padding: 0.5em;
 }
 
 .quantity {
