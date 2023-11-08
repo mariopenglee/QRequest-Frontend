@@ -2,11 +2,12 @@ import { Component } from 'react';
 import './Landing.css';
 import testicon from './assets/react.svg'
 import Section from './Section.jsx'
+import CartItem from './assets/Components/CartItem.jsx'
 
 
 
 export class Landing extends Component {
- 
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +21,8 @@ export class Landing extends Component {
       restaurantTagsString: "",
       sectionsData: [],
       restaurantProductsByTag: {},
+      cartItems: [],
+      isCartOpen: false,
     };
     this.handleScroll = this.handleScroll.bind(this);
   }
@@ -56,6 +59,7 @@ export class Landing extends Component {
       { id: 4, title: 'Desserts', content: 'Check out our delicious desserts.', items: [{name: "item1", description: "item1's description"}, {name: "item2", description: "item2's description"}, {name: "item3", description: "item3's description"}]},
       { id: 5, title: 'Drinks', content: 'Check out our delicious drinks.', items: [{name: "item1", description: "item1's description"}, {name: "item2", description: "item2's description"}, {name: "item3", description: "item3's description"}]},
     ]
+    
     this.setState({sectionsData: sectionsBase})
     fetch(baseRequestURL + '/api/restaurants/' + restaurantUUID + '/' )
     .then(response => response.json())
@@ -178,10 +182,31 @@ export class Landing extends Component {
   
 
   // handle cart related functions
-  handleAddToCart = (itemId, quantity) => {
-    console.log(`Add ${quantity} of item ${itemId} to cart`);
+  handleAddToCart = (item, quantity) => {
+    console.log(item.name, item.price, quantity);
+    let cartItems = this.state.cartItems;
+    let itemInCart = false;
+    for (let i = 0; i < cartItems.length; i++) {
+      if (cartItems[i].id === item.id) {
+        cartItems[i].quantity += quantity;
+        itemInCart = true;
+        break;
+      }
+    }
+    if (!itemInCart) {
+      cartItems.push({id: item.id, name: item.name, price: item.price, quantity: quantity});
+    }
+    this.setState({cartItems: cartItems});
+    
+    console.log(this.state.cartItems);
   }
-
+  
+  toggleCart = () => {
+    this.setState((prevState) => ({
+      isCartOpen: !prevState.isCartOpen,
+    }));
+  };
+ 
   
   
 
@@ -192,7 +217,9 @@ export class Landing extends Component {
       <div className="app">
         <div className= "top-sticky">
         <div className="restaurant-info">
-            <img src={this.state.restaurantImage} alt="testicon" className='restaurant-image' />
+            <div className='restaurant-image-container'>
+              <img src={this.state.restaurantImage} alt="testicon" className='restaurant-image' />
+            </div>
             <div className="restaurant-title">
               <p className="restaurant-name">{this.state.restaurantName}</p>
               <p className="restaurant-slogan">{this.state.restaurantSlogan}</p>
@@ -227,10 +254,21 @@ export class Landing extends Component {
           ))}
         </div>
         <div className="bottom-sticky">
-          <div className="cart-container">
-            <button className='cart-button'>
+          
+          <div className={`cart ${this.state.isCartOpen ? 'open' : ''}`}>
+            <button className='cart-button' onClick={this.toggleCart}>
               <span>🥡</span>
             </button>
+            <div className="cart-items">
+              {this.state.cartItems.map(cartItem => (
+                <CartItem key={cartItem.id} cartItem={cartItem} quantity={cartItem.quantity} />
+              ))}
+            </div>
+            <div className="cart-total">
+              <p className="cart-total-text">Total</p>
+              <p className="cart-total-price">$ 1.99</p>
+            </div>
+            <button className="cart-checkout-button">Checkout</button>
           </div>
         </div>
       </div>

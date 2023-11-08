@@ -6,9 +6,9 @@
   --main-color: #ED583F;
   --secondary-color: #646cff;
 
-  --font-color: #68727b;
-  --font-highlight: #2a2b2f;
-  --background-main: #e0e0e0;
+  --font-color: #969696;
+  --font-highlight: #717171;;
+  --background-main: #FFFFFF;
 
   font-family: 'Nunito Sans', sans-serif;
   line-height: 1.5;
@@ -64,9 +64,12 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--main-color);
   cursor: pointer;
   transition: border-color 0.25s;
+  color: var(--font-highlight);
+  background: var(--nue-white-2, #EEE);
+  box-shadow: 1px 1px 2px 0px rgba(174, 174, 192, 0.20) inset, -1px -1px 1px 0px rgba(255, 255, 255, 0.70) inset;
+
 }
 button:hover {
   border-color: #ffffff;

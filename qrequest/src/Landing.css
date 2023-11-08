@@ -82,11 +82,10 @@
 .top-sticky {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  text-align: center;
+  width: 100vw;
   padding: 1em;
-  width: 100%;
 
 }
 
@@ -96,16 +95,34 @@
   color: var(--font-highlight);
   font-size: 2em;
   line-height: 0px;
+
+  
+
 }
 
-.restaurant-image {
-  width: 100px;
+.restaurant-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
   object-position: center;
-  border-radius: 0.5em;
-  box-shadow:  5px 5px 10px #bebebe,
-               -5px -5px 10px #ffffff;
+  border-radius: 100px;
+  background: #F87BCD;
+  box-shadow: 0px 1.48248px 2.96496px 0px rgba(0, 0, 0, 0.15) inset;
+
 }
+
+.restaurant-image{
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 100px;
+  box-shadow: 5px 5px 10px #d66bb1
+               -5px -5px 10px #ffffff;
+ }
 .restaurant-slogan {
   font-size: 1.2em;
   line-height: 0px;
@@ -116,6 +133,7 @@
   display: flex;
   flex-direction: column;
   text-align: left;
+  
 
 }
 
@@ -124,11 +142,9 @@
   height: var(--app-height);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   overflow: hidden;
-
-  
 }
 
 .scroll-container {
@@ -145,8 +161,13 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 1em;
-  width: 100%;
+  gap: 2em;
+  border-radius: 0.5em;
+  width: 90%;
+  padding: 0.5em;
+  background: var(--background-main);
+  box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.15), -6px -6px 15px 0px rgba(255, 255, 255, 0.78);
+
 }
 
 
@@ -157,34 +178,56 @@
   justify-content: center;
   width: 100%;
   padding: 0;
-  background-color: var(--ceramic);
   position: sticky;
   z-index: 100;
 }
 
-.cart-container {
-  width: 50%;
-  background-color: var(--ceramic);
-  position: sticky;
-  z-index: 100;
-}
 
 .cart-button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5em;
-  border-radius: 0.5em;
-  background-color: var(--main-color);
-  color: var(--font-color);
-  font-weight: bold;
-  font-size: 1.2em;
-  width: 100%;
-  transition: background-color 0.5s;
-  box-shadow:  5px 5px 10px #bebebe,
-               -5px -5px 10px #ffffff;
+  width: 50%;
+  
 }
+
+
+.cart {
+  /* Define the initial styles for the closed panel */
+  position: fixed;
+  bottom: calc(-50vh + 3em);
+  height: 50vh; /* Set the desired height of the panel */
+  transition: transform 0.3s ease-in-out;
+  overflow: auto;
+  background: var(--background-main);
+  box-shadow: 1px 1px 2px 0px rgba(174, 174, 192, 0.20) inset, -1px -1px 1px 0px rgba(255, 255, 255, 0.70) inset;
+
+  border-top-left-radius: 10em;
+  border-top-right-radius: 10em;
+  padding: 1em;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1em;
+}
+
+.cart.open{
+  /* Define the styles for the open panel */
+  transform: translateY(-100vw);
+}
+.cart-items{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1em;
+  width: calc(100vw - 4em);
+
+}
+
+
+
+
 
 
 @media (orientation: landscape) {
