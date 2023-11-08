@@ -41,7 +41,9 @@
 .nav-link.active .navbar-icon {
   color: var(--font-highlight);
   font-weight: bold;
-  background-color: var(--main-color);
+  background: #F87BCD;
+  box-shadow: 0px 1.48248px 2.96496px 0px rgba(0, 0, 0, 0.15) inset;
+
 }
 
 .nav-link.active .img {
@@ -225,7 +227,9 @@
 
 }
 
-
+.disable-scroll {
+  overflow: hidden;
+}
 
 
 

@@ -10,9 +10,9 @@ export default function CartItem(props) {
       <p className="cart-item-price">$ {props.cartItem.price}</p>
     </div>
     <div className="cart-item-quantity">
-      <button className="cart-item-quantity-button">-</button>
+      <button className="cart-item-quantity-button" onClick={() => props.onQuantityChange(props.cartItem.id, (props.quantity - 1))}>-</button>
       <p className="cart-item-quantity-number">{props.quantity}</p>
-      <button className="cart-item-quantity-button">+</button>
+      <button className="cart-item-quantity-button" onClick={() => props.onQuantityChange(props.cartItem.id, (props.quantity + 1))}>+</button>
     </div>
   </div>
   )
@@ -28,4 +28,5 @@ CartItem.propTypes = {
 
    quantity: PropTypes.number.isRequired,
 
+   onQuantityChange: PropTypes.func.isRequired,
 };

@@ -23,6 +23,10 @@ export class Landing extends Component {
       restaurantProductsByTag: {},
       cartItems: [],
       isCartOpen: false,
+      isDragging: false,
+      startY: 0,
+      currentY: 0,
+      
     };
     this.handleScroll = this.handleScroll.bind(this);
   }
@@ -39,11 +43,14 @@ export class Landing extends Component {
     }
     window.addEventListener('resize', appHeight)
     appHeight()
+
+    document.addEventListener('click', this.handleDocumentClick);
+
   }
   
 
   load() {
-    const baseRequestURL = 'http://159.223.192.169'
+    const baseRequestURL = 'http://api.pocketmenu.app'
     const params = new URLSearchParams(window.location.search);
     const restaurantUUID = params.get('restaurant');
     /*const sectionsBase = [
@@ -145,6 +152,8 @@ export class Landing extends Component {
   componentWillUnmount() {
     const scrollContainer = document.querySelector('.scroll-container');
     scrollContainer.removeEventListener('scroll', this.handleScroll);
+    document.removeEventListener('click', this.handleDocumentClick);
+
   }
 
   scrollToSection(sectionId) {
@@ -197,16 +206,108 @@ export class Landing extends Component {
       cartItems.push({id: item.id, name: item.name, price: item.price, quantity: quantity});
     }
     this.setState({cartItems: cartItems});
-    
+
     console.log(this.state.cartItems);
   }
   
-  toggleCart = () => {
-    this.setState((prevState) => ({
-      isCartOpen: !prevState.isCartOpen,
-    }));
+  openCart = () => {
+    this.setState({ isCartOpen: true });
   };
- 
+
+  closeCart = () => {
+    this.setState({ isCartOpen: false });
+  };
+
+  toggleCart = () => {
+    this.setState((prevState) => ({ isCartOpen: !prevState.isCartOpen }));
+  };
+  handleQuantityChange = (itemId, newQuantity) => {
+    if (newQuantity <= 0) {
+      this.setState((prevState) => ({
+        cartItems: prevState.cartItems.filter(item => item.id !== itemId),
+      }));
+      return;
+    }
+    const updatedItems = this.state.cartItems.map(item => {
+      if (item.id === itemId) {
+        return { ...item, quantity: newQuantity };
+      }
+      return item;
+    });
+    this.setState({ cartItems: updatedItems });
+  }
+
+
+  handleTouchStart = (e) => {
+    this.setState({
+      isDragging: true,
+      startY: e.touches[0].clientY,
+      currentY: e.touches[0].clientY,
+    });
+    const scrollContainer = document.querySelector('.scroll-container');
+    scrollContainer.classList.add('disable-scroll');
+
+  };
+
+  handleTouchMove = (e) => {
+
+    if (!this.state.isDragging) return;
+
+    const currentY = e.touches[0].clientY;
+    this.setState({ currentY });
+
+    // Calculate the distance moved
+    const deltaY = currentY - this.state.startY;
+
+    // Adjust the cart panel position
+    const cart = document.querySelector('.cart');
+    cart.style.transform = `translateY(${deltaY}px)`;
+  };
+
+  handleTouchEnd = () => {
+    if (!this.state.isDragging) return;
+
+    const deltaY = this.state.currentY - this.state.startY;
+
+    // Define a threshold for opening/closing the cart
+    const threshold = 50;
+
+    if (deltaY < -threshold) {
+      this.openCart();
+    } else {
+      this.closeCart();
+    }
+
+    // Reset the cart panel position
+    const cart = document.querySelector('.cart');
+    cart.style.transform = '';
+
+    this.setState({
+      isDragging: false,
+      startY: 0,
+      currentY: 0,
+    });
+
+    const scrollContainer = document.querySelector('.scroll-container');
+    scrollContainer.classList.remove('disable-scroll');
+
+  };
+
+  handleDocumentClick = (e) => {
+
+    if (!cart.contains(e.target) && this.state.isCartOpen) {
+      this.closeCart();
+    }
+    // show all the elements that are clicked
+    console.log(e.target);
+
+    
+
+
+
+    
+  };
+
   
   
 
@@ -255,18 +356,22 @@ export class Landing extends Component {
         </div>
         <div className="bottom-sticky">
           
-          <div className={`cart ${this.state.isCartOpen ? 'open' : ''}`}>
+          <div className={`cart ${this.state.isCartOpen ? 'open' : ''}`}
+          onTouchStart={this.handleTouchStart}
+          onTouchMove={this.handleTouchMove}
+          onTouchEnd={this.handleTouchEnd}
+          >
             <button className='cart-button' onClick={this.toggleCart}>
               <span>🥡</span>
             </button>
             <div className="cart-items">
               {this.state.cartItems.map(cartItem => (
-                <CartItem key={cartItem.id} cartItem={cartItem} quantity={cartItem.quantity} />
+                <CartItem key={cartItem.id} cartItem={cartItem} quantity={cartItem.quantity} onQuantityChange={this.handleQuantityChange} />
               ))}
             </div>
             <div className="cart-total">
               <p className="cart-total-text">Total</p>
-              <p className="cart-total-price">$ 1.99</p>
+              <p className="cart-total-price">$ {this.state.cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</p>
             </div>
             <button className="cart-checkout-button">Checkout</button>
           </div>
