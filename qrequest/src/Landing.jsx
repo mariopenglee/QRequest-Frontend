@@ -50,7 +50,7 @@ export class Landing extends Component {
   
 
   load() {
-    const baseRequestURL = 'http://api.pocketmenu.app'
+    const baseRequestURL = 'https://api.pocketmenu.app'
     const params = new URLSearchParams(window.location.search);
     const restaurantUUID = params.get('restaurant');
     /*const sectionsBase = [
