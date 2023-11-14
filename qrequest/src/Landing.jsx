@@ -15,7 +15,7 @@ export class Landing extends Component {
       restaurantName : "Test Name",
       restaurantImage : "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png",
       restaurantSlogan : "slogan",
-      restaurantRating : 1,
+      // restaurantRating : 1,
       restaurantFeatured: {},
       restaurantTags: {},
       restaurantTagsString: "",
@@ -74,7 +74,7 @@ export class Landing extends Component {
         this.setState({ 
             restaurantName: responseData.name, 
             restaurantSlogan: responseData.slogan,
-            restaurantRating: responseData.rating.toString(),
+            // restaurantRating: responseData.rating,
             restaurantImage: responseData.image
         }, () => {});
     });
@@ -294,13 +294,13 @@ export class Landing extends Component {
   };
 
   handleDocumentClick = (e) => {
-
-    if (!cart.contains(e.target) && this.state.isCartOpen) {
+    const cart = document.querySelector('.cart');
+    if (cart && !cart.contains(e.target) && this.state.isCartOpen) {
       this.closeCart();
     }
-    // show all the elements that are clicked
-    console.log(e.target);
 
+
+    
     
 
 
@@ -357,9 +357,9 @@ export class Landing extends Component {
         <div className="bottom-sticky">
           
           <div className={`cart ${this.state.isCartOpen ? 'open' : ''}`}
-          onTouchStart={this.handleTouchStart}
-          onTouchMove={this.handleTouchMove}
-          onTouchEnd={this.handleTouchEnd}
+            onTouchStart={this.handleTouchStart}
+            onTouchMove={this.handleTouchMove}
+            onTouchEnd={this.handleTouchEnd}
           >
             <button className='cart-button' onClick={this.toggleCart}>
               <span>🥡</span>
@@ -373,7 +373,8 @@ export class Landing extends Component {
               <p className="cart-total-text">Total</p>
               <p className="cart-total-price">$ {this.state.cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</p>
             </div>
-            <button className="cart-checkout-button">Checkout</button>
+            <button className="cart-checkout-button" onClick={() => {console.log(this.state.cartItems)}}
+            >Checkout</button>
           </div>
         </div>
       </div>

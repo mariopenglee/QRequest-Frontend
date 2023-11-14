@@ -127,15 +127,16 @@
  }
 .restaurant-slogan {
   font-size: 1.2em;
-  line-height: 0px;
+
 
 }
 
 .restaurant-title {
   display: flex;
   flex-direction: column;
-  text-align: left;
-  
+  align-items: flex-start;
+  justify-content: center;
+
 
 }
 
