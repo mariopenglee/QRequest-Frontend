@@ -3,11 +3,20 @@ import './Landing.css';
 import testicon from './assets/react.svg'
 import Section from './Section.jsx'
 import CartItem from './assets/Components/CartItem.jsx'
+import { motion } from 'framer-motion';
 
 
+const variants = {
+  open: { opacity: 1, height: "fit-content" },
+  closed: { opacity: 0, height: 0 }
+}
+
+const transition = {
+  staggerChildren: 0.07,
+  duration: 0.4
+}
 
 export class Landing extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +32,6 @@ export class Landing extends Component {
       restaurantProductsByTag: {},
       cartItems: [],
       isCartOpen: false,
-      isDragging: false,
       startY: 0,
       currentY: 0,
       
@@ -160,15 +168,20 @@ export class Landing extends Component {
     const sectionElement = document.querySelector(`#section-${sectionId}`);
     const scrollContainer = document.querySelector('.scroll-container');
     const navbar = document.querySelector('.navbar');
-    const navbarheight = navbar.offsetHeight;
+    const navbarHeight = navbar.offsetHeight;
     const restoInfo = document.querySelector('.restaurant-info');
     const restoInfoHeight = restoInfo.offsetHeight;
-    const fullOffset = navbarheight + restoInfoHeight;
+    const fullOffset = navbarHeight + restoInfoHeight;
+  
+    // Scroll to the section content
     scrollContainer.scrollTo({
       top: sectionElement.offsetTop - fullOffset, 
       behavior: 'smooth',
     });
+  
+    
   }
+  
 
   handleScroll() {
     const scrollContainer = document.querySelector('.scroll-container');
@@ -187,6 +200,17 @@ export class Landing extends Component {
       }
     });
     this.setState({ activeSection: activeSection });
+
+    // Calculate the centering for the navbar link
+    const navbarLink = document.querySelector(`.nav-link:nth-child(${activeSection})`);
+    const linkCenter = navbarLink.offsetLeft + navbarLink.offsetWidth / 2;
+    const navbarCenter = navbar.offsetWidth / 2;
+  
+    // Adjust scroll position of navbar to center the link
+    navbar.scrollTo({
+      left: linkCenter - navbarCenter,
+      behavior: 'smooth'
+    });
   }
   
 
@@ -219,7 +243,8 @@ export class Landing extends Component {
   };
 
   toggleCart = () => {
-    this.setState((prevState) => ({ isCartOpen: !prevState.isCartOpen }));
+    console.log(this.state.isCartOpen);
+    this.setState({ isCartOpen: !this.state.isCartOpen });
   };
   handleQuantityChange = (itemId, newQuantity) => {
     if (newQuantity <= 0) {
@@ -237,74 +262,11 @@ export class Landing extends Component {
     this.setState({ cartItems: updatedItems });
   }
 
-
-  handleTouchStart = (e) => {
-    this.setState({
-      isDragging: true,
-      startY: e.touches[0].clientY,
-      currentY: e.touches[0].clientY,
-    });
-    const scrollContainer = document.querySelector('.scroll-container');
-    scrollContainer.classList.add('disable-scroll');
-
-  };
-
-  handleTouchMove = (e) => {
-
-    if (!this.state.isDragging) return;
-
-    const currentY = e.touches[0].clientY;
-    this.setState({ currentY });
-
-    // Calculate the distance moved
-    const deltaY = currentY - this.state.startY;
-
-    // Adjust the cart panel position
-    const cart = document.querySelector('.cart');
-    cart.style.transform = `translateY(${deltaY}px)`;
-  };
-
-  handleTouchEnd = () => {
-    if (!this.state.isDragging) return;
-
-    const deltaY = this.state.currentY - this.state.startY;
-
-    // Define a threshold for opening/closing the cart
-    const threshold = 50;
-
-    if (deltaY < -threshold) {
-      this.openCart();
-    } else {
-      this.closeCart();
-    }
-
-    // Reset the cart panel position
-    const cart = document.querySelector('.cart');
-    cart.style.transform = '';
-
-    this.setState({
-      isDragging: false,
-      startY: 0,
-      currentY: 0,
-    });
-
-    const scrollContainer = document.querySelector('.scroll-container');
-    scrollContainer.classList.remove('disable-scroll');
-
-  };
-
   handleDocumentClick = (e) => {
     const cart = document.querySelector('.cart');
     if (cart && !cart.contains(e.target) && this.state.isCartOpen) {
       this.closeCart();
     }
-
-
-    
-    
-
-
-
     
   };
 
@@ -356,14 +318,16 @@ export class Landing extends Component {
         </div>
         <div className="bottom-sticky">
           
-          <div className={`cart ${this.state.isCartOpen ? 'open' : ''}`}
-            onTouchStart={this.handleTouchStart}
-            onTouchMove={this.handleTouchMove}
-            onTouchEnd={this.handleTouchEnd}
-          >
+          <div className={`cart`}>
             <button className='cart-button' onClick={this.toggleCart}>
               <span>🥡</span>
             </button>
+            <motion.div
+              className="cart-content"
+              variants={variants}
+              animate={this.state.isCartOpen ? 'open' : 'closed'}
+              transition={transition}
+              >
             <div className="cart-items">
               {this.state.cartItems.map(cartItem => (
                 <CartItem key={cartItem.id} cartItem={cartItem} quantity={cartItem.quantity} onQuantityChange={this.handleQuantityChange} />
@@ -372,9 +336,10 @@ export class Landing extends Component {
             <div className="cart-total">
               <p className="cart-total-text">Total</p>
               <p className="cart-total-price">$ {this.state.cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</p>
+                          <button className="cart-checkout-button">Checkout</button>
             </div>
-            <button className="cart-checkout-button" onClick={() => {console.log(this.state.cartItems)}}
-            >Checkout</button>
+
+            </motion.div>
           </div>
         </div>
       </div>

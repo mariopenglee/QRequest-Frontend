@@ -2,11 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,700&display=swap');
 :root {
 
-  --ceramic: #e0e0e0;
-  --main-color: #ED583F;
-  --secondary-color: #646cff;
+  --ceramic: white;
+  --main-color: #FAA275;
+  --secondary-color: #FF8C61;
+  --variant-color: #CE6A85;
+  --secondary-variant-color:#985277;
+  --dark-tone: #5C374C;
 
-  --font-color: #969696;
+  --font-color: #5C374C;
   --font-highlight: #717171;;
   --background-main: #FFFFFF;
 
@@ -67,12 +70,12 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
   color: var(--font-highlight);
-  background: var(--nue-white-2, #EEE);
+  background: var(--secondary-color);
   box-shadow: 1px 1px 2px 0px rgba(174, 174, 192, 0.20) inset, -1px -1px 1px 0px rgba(255, 255, 255, 0.70) inset;
 
 }
 button:hover {
-  border-color: #ffffff;
+  border-color: var(--dark-tone);
 }
 button:focus,
 button:focus-visible {
@@ -82,12 +85,31 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: --var(background-main);
   }
   a:hover {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: var(--main-color);
   }
+}
+
+
+* {
+  scrollbar-width: 0;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 0;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--main-color);
+  border-radius: 20px;
 }

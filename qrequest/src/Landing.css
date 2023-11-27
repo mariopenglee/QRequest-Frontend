@@ -41,7 +41,7 @@
 .nav-link.active .navbar-icon {
   color: var(--font-highlight);
   font-weight: bold;
-  background: #F87BCD;
+  background: var(--secondary-color);
   box-shadow: 0px 1.48248px 2.96496px 0px rgba(0, 0, 0, 0.15) inset;
 
 }
@@ -67,7 +67,7 @@
   border-radius: 0.5em;
   width: 20vw;
   height: 10vw;
-  background-color: var(--background-main);
+  background-color: var(--ceramic);
   transition: background-color 0.5s;
   box-shadow:  5px 5px 10px #bebebe,
                -5px -5px 10px #ffffff;
@@ -88,7 +88,7 @@
   justify-content: center;
   width: 100vw;
   padding: 1em;
-
+  
 }
 
 .restaurant-name {
@@ -111,7 +111,7 @@
   object-fit: cover;
   object-position: center;
   border-radius: 100px;
-  background: #F87BCD;
+  background: var(--variant-color);
   box-shadow: 0px 1.48248px 2.96496px 0px rgba(0, 0, 0, 0.15) inset;
 
 }
@@ -122,8 +122,6 @@
   object-fit: cover;
   object-position: center;
   border-radius: 100px;
-  box-shadow: 5px 5px 10px #d66bb1
-               -5px -5px 10px #ffffff;
  }
 .restaurant-slogan {
   font-size: 1.2em;
@@ -156,6 +154,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-bottom: 20vh;
 }
 
 
@@ -168,13 +167,15 @@
   border-radius: 0.5em;
   width: 90%;
   padding: 0.5em;
-  background: var(--background-main);
+  background-color: var(--main-color);
   box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.15), -6px -6px 15px 0px rgba(255, 255, 255, 0.78);
 
 }
 
 
 .bottom-sticky {
+  position: fixed;
+  bottom: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -188,6 +189,7 @@
 
 .cart-button {
   width: 50%;
+  z-index: 100;
   
 }
 
@@ -195,15 +197,14 @@
 .cart {
   /* Define the initial styles for the closed panel */
   position: fixed;
-  bottom: calc(-50vh + 3em);
-  height: 50vh; /* Set the desired height of the panel */
-  transition: transform 0.3s ease-in-out;
-  overflow: auto;
-  background: var(--background-main);
+  bottom: 0;
+  height: fit-content;
+  overflow: hidden;
+  background: var(--main-color);
   box-shadow: 1px 1px 2px 0px rgba(174, 174, 192, 0.20) inset, -1px -1px 1px 0px rgba(255, 255, 255, 0.70) inset;
 
-  border-top-left-radius: 10em;
-  border-top-right-radius: 10em;
+  border-top-left-radius: min(10em, 50%);
+  border-top-right-radius: min(10em, 50%);
   padding: 1em;
   width: 100%;
 
@@ -214,10 +215,15 @@
   gap: 1em;
 }
 
-.cart.open{
-  /* Define the styles for the open panel */
-  transform: translateY(-100vw);
+.cart-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1em;
+  width: 100%;
 }
+
 .cart-items{
   display: flex;
   flex-direction: column;
@@ -225,12 +231,19 @@
   justify-content: flex-start;
   gap: 1em;
   width: calc(100vw - 4em);
-
+  max-height: 50vh;
+  overflow: scroll;
 }
 
-.disable-scroll {
-  overflow: hidden;
+.cart-total {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  width: 100%;
 }
+
 
 
 

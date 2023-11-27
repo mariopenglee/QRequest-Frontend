@@ -5,11 +5,10 @@
     align-items: center;
     justify-content: space-between;
     gap: 1em;
-    width: 100%;
     padding: 0.5em;
     border-radius: 0.5em;
-    background-color: var(--background-main);
-    box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.15), -6px -6px 15px 0px rgba(255, 255, 255, 0.78);
+    background-color: var(--secondary-color);
+    box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.15);
   }
   
   .cart-item-quantity {
@@ -20,6 +19,5 @@
     gap: 0.5em;
     padding: 0.5em;
     border-radius: 0.5em;
-    background-color: var(--background-main);
-    box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.15), -6px -6px 15px 0px rgba(255, 255, 255, 0.78);
+    background-color: var(--secondary-variant-color);
   }
