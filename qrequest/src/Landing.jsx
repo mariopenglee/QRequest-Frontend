@@ -285,7 +285,7 @@ export class Landing extends Component {
             </div>
             <div className="restaurant-title">
               <p className="restaurant-name">{this.state.restaurantName}</p>
-              <p className="restaurant-slogan">{this.state.restaurantSlogan}</p>
+              {/*<p className="restaurant-slogan">{this.state.restaurantSlogan}</p>*/}
             </div>
             {/*
             <div className="restaurant-rating">
