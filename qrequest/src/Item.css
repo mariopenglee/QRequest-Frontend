@@ -8,7 +8,6 @@
     padding: 1em;
     border-radius: 1em;
     background: linear-gradient(180deg, var(--main-color) 5%, var(--secondary-color) 100%);
-    overflow: hidden;
 
   }
 
@@ -29,7 +28,7 @@ margin: 0;
 .item-info {
 text-align: left;
 width: 100%;
-overflow-x: hidden;
+overflow: hidden;
 }
 
 .item-price {
